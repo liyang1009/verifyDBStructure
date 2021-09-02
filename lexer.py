@@ -15,6 +15,7 @@ _KEYWORDS = ["DROP",
 "PRIMARY",
 "KEY",
 "AUTO_INCREMENT",
+"INDEX",
 "COMMENT"]
 
 class Lexer():

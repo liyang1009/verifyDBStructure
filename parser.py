@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from lexer import Lexer
 from entity import *
-
+import pdb
 class Parser():
 	'''parser the table definition'''
 	def __init__(self,file_path ,content ):
@@ -31,6 +31,7 @@ class Parser():
 				break
 			table = {} 
 			table["table_name"] = table_name
+			#pdb.set_trace()
 			table["statements"]= self._parse_statements()
 			table["indexs"] = self._parse_indexs()
 			tables[table_name] = table
@@ -52,6 +53,7 @@ class Parser():
 		'''parse the single index structure'''
 		is_primary = False	
 		key_word = self.lexer.get_keyword()	
+		
 		index_name = "primary"
 		if self.lexer.is_primary_keyword(key_word):
 			self.lexer.get_keyword()	
@@ -66,7 +68,12 @@ class Parser():
 			column_names.append(c_name)
 			
 		self.lexer.get_parenthese()
+		while(self.lexer.next_token() != ")" and self.lexer.next_token() != ','):
+			self.lexer._consume_token()
+
 		index =  Index(column_names,is_primary,index_name)
+
+
 		return index
 
 	def _parse_indexs(self):
